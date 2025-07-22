@@ -19,7 +19,7 @@ jobs:
         name: Unit Testing Workflow
         services:
           mongo-db:
-            image: abdulwasay957/solar-system:8573c20bc5ee59c23af1bcf69c60ba2b89664fac
+            image: siddhart67/mongo-db:non-prod
             ports:
               - 27017:27017
 
