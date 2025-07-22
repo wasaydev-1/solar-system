@@ -9,7 +9,7 @@ on:
     
 jobs:
     unit-testing:
-        name: Unit Testing Flow
+        name: Unit Testing
         runs-on: ubuntu-latest
         steps:
         - name: Checkout Repository
@@ -26,8 +26,4 @@ jobs:
         - name: Unit Testing
           run: npm test
           
-        - name: Archive Test Result
-          uses: actions/upload-artifact@v3
-          with:
-            name: Mocha-Test-Result
-            path: test-results.xml
+       
