@@ -10,22 +10,22 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/')));
 app.use(cors())
 
-// Only connect to MongoDB if not in test environment
-if (process.env.NODE_ENV !== 'test') {
-    // Use environment variable for MongoDB URI
-    const mongoUri = process.env.MONGO_URI || 'mongodb+srv://wasay:wasay%40654@cluster0.5vx6n24.mongodb.net/';
-    
-    mongoose.connect(mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }).then(() => {
-        console.log("MongoDB Connection Successful");
-    }).catch((err) => {
-        console.log("MongoDB Connection Error: " + err);
-    });
-} else {
-    console.log("Test environment detected - skipping MongoDB connection");
-}
+// Get MongoDB URI from environment or use fallback
+const mongoUri = process.env.MONGO_URI || 'mongodb+srv://wasay:wasay%40654@cluster0.5vx6n24.mongodb.net/solar-system';
+
+// Connect to MongoDB with proper options to avoid deprecation warnings
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    // These options help avoid the deprecation warnings
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+}).then(() => {
+    console.log("MongoDB Connection Successful");
+}).catch((err) => {
+    console.log("MongoDB Connection Error: " + err);
+    // Don't exit the process, let tests continue with connection errors
+});
 
 var Schema = mongoose.Schema;
 
@@ -41,39 +41,18 @@ var dataSchema = new Schema({
 var planetModel = mongoose.model('planets', dataSchema);
 
 app.post('/planet', function(req, res) {
-    // console.log("Received Planet ID " + req.body.id)
+    console.log("Received Planet ID " + req.body.id);
     
-    // If in test environment, return mock data
-    if (process.env.NODE_ENV === 'test') {
-        const mockPlanets = {
-            1: { id: 1, name: 'Mercury' },
-            2: { id: 2, name: 'Venus' },
-            3: { id: 3, name: 'Earth' },
-            4: { id: 4, name: 'Mars' },
-            5: { id: 5, name: 'Jupiter' },
-            6: { id: 6, name: 'Saturn' },
-            7: { id: 7, name: 'Uranus' },
-            8: { id: 8, name: 'Neptune' }
-        };
-        
-        const planet = mockPlanets[req.body.id];
-        if (planet) {
-            res.send(planet);
-        } else {
-            res.status(404).send("Planet not found");
-        }
-        return;
-    }
-    
-    // Production database query
     planetModel.findOne({
         id: req.body.id
-    }, function(err, planetData) {
-        if (err) {
-            res.status(500).send("Error in Planet Data");
-        } else {
-            res.send(planetData);
+    }).then((planetData) => {
+        if (!planetData) {
+            return res.status(404).send({error: "Planet not found"});
         }
+        res.send(planetData);
+    }).catch((err) => {
+        console.error("Database error:", err);
+        res.status(500).send({error: "Error in Planet Data"});
     });
 });
 
