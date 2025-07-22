@@ -9,7 +9,7 @@ on:
     
 jobs:
     unit-testing:
-        name: Unit Testing
+        name: Unit Testing Flow
         runs-on: ubuntu-latest
         steps:
         - name: Checkout Repository
