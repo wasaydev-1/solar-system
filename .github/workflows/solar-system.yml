@@ -13,7 +13,7 @@ env:
     MONGO_USERNAME: '${{vars.MONGO_USERNAME}}'
     MONGO_PASSWORD: '${{secrets.MONGO_PASSWORD}}'  
     
-    MONGO_URI: 'mongodb+srv://${{vars.MONGO_USERNAME}}:${{secrets.MONGO_PASSWORD}}@cluster0.5vx6n24.mongodb.net/solar?retryWrites=true&w=majority&appName=Cluster0'
+    MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
 
 jobs:
     unit-testing:
