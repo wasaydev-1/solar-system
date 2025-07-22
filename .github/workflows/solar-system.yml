@@ -17,20 +17,6 @@ env:
 jobs:
     unit-testing:
         name: Unit Testing Workflow
-        services:
-          mongo-db:
-            image: mongo:6
-            ports:
-            - 27017:27017
-            env:
-              MONGO_INITDB_ROOT_USERNAME: testuser
-              MONGO_INITDB_ROOT_PASSWORD: testpass
-        env:
-         MONGO_USERNAME: 'testuser'
-         MONGO_PASSWORD: 'testpass'
-         MONGO_URI: 'mongodb://testuser:testpass@localhost:27017/superData?authSource=admin'  
-
-
         strategy:
           matrix:
             nodejs_version: [18, 19, 20]
