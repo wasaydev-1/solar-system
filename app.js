@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '/')));
 app.use(cors())
 
-mongoose.connect('mongodb+srv://wasay:wasay%40@cluster0.5vx6n24.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://wasay:wasay%40654@cluster0.5vx6n24.mongodb.net/', {
     user: 'wasay',
     pass: 'wasay@654',
     useNewUrlParser: true,
