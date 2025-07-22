@@ -12,7 +12,7 @@ env:
     # Complete URI with database name - choose ONE approach
     MONGO_USERNAME: '${{vars.MONGO_USERNAME}}'
     MONGO_PASSWORD: '${{secrets.MONGO_PASSWORD}}'  
-    # OR use secrets (recommended for production)
+    
     MONGO_URI: 'mongodb+srv://${{vars.MONGO_USERNAME}}:${{secrets.MONGO_PASSWORD}}@cluster0.5vx6n24.mongodb.net/solar?retryWrites=true&w=majority&appName=Cluster0'
 
 jobs:
