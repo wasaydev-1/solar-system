@@ -7,9 +7,9 @@ on:
       - main
       - 'feature/*'
 env:
-    MONGO_URI:'mongodb+srv://wasay:wasay%40654@cluster0.5vx6n24.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
-    MONGO_USERNAME:'${{vars.MONGO_USERNAME}}'
-    MONGO_PASSWORD:'${{secrets.MONGO_PASSWORD}}'   
+    MONGO_URI: 'mongodb+srv://wasay:wasay%40654@cluster0.5vx6n24.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0'
+    MONGO_USERNAME: '${{vars.MONGO_USERNAME}}'
+    MONGO_PASSWORD: '${{secrets.MONGO_PASSWORD}}'   
 jobs:
     unit-testing:
         name: Unit Testing
