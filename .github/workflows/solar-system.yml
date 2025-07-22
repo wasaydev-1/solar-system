@@ -19,14 +19,16 @@ jobs:
         name: Unit Testing Workflow
         services:
           mongo-db:
-            image: abdulwasay957/solar-system:8573c20bc5ee59c23af1bcf69c60ba2b89664fac
+            image: mongo:6
             ports:
-              - 27017:27017
-
+            - 27017:27017
+            env:
+              MONGO_INITDB_ROOT_USERNAME: testuser
+              MONGO_INITDB_ROOT_PASSWORD: testpass
         env:
-         MONGO_USERNAME: 'non-prod-user'
-         MONGO_PASSWORD: 'non-prod-password'  
-         MONGO_URI: 'mongodb://localhost:27017/superData'     
+         MONGO_USERNAME: 'testuser'
+         MONGO_PASSWORD: 'testpass'
+         MONGO_URI: 'mongodb://testuser:testpass@localhost:27017/superData?authSource=admin'  
 
 
         strategy:
