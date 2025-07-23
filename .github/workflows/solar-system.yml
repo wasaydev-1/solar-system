@@ -154,22 +154,23 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Start minikube
+        uses: medyagh/setup-minikube@master
+        with:
+         minikube-version: 1.32.0
+         kubernetes-version: v1.28.3
+
       - name: Install kubectl
         uses: azure/setup-kubectl@v3
         with:
-          version: 'v1.26.0'
+         version: 'v1.28.3'
 
-
-      - name: Set KUBECONFIG
-        uses: azure/k8s-set-context@v3
-        with:
-          method: kubeconfig
-          kubeconfig: ${{secrets.KUBECONFIG}}
-
-
-      - name: Fetch kubernetes cluster
+      - name: Test cluster connection
         run: |
-         kubectl version --short -o yaml
-         echo ----------------------------
+         kubectl version --client -o yaml
+         echo "----------------------------"
          kubectl get nodes
+         echo "----------------------------" 
+         kubectl cluster-info
+    
 
